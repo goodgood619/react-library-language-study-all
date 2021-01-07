@@ -1,4 +1,4 @@
-### Garbage Collection
+## Garbage Collection
 
 ---
 

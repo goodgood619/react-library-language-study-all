@@ -1,8 +1,12 @@
-### Method와 This
+## Method와 This
+
+---
+<br>
+
+### Method
 
 ---
 
-- Method
 
 객체 프로퍼티에 할당된 함수를 Method라고 부릅니다.
 
@@ -28,6 +32,8 @@ user.sayHi2 = sayHi2;
 
 user.sayHi2();
 ```
+
+<br><br>
 
 그런데, 메소드는 객체에 저장된 정보에 접근할 수 있어야 제 역할을 할 수 있습니다.
 
@@ -69,6 +75,8 @@ admin.f(); // Admin  (this == admin)
 
 admin['f'](); // Admin (점과 대괄호는 동일하게 동작합니다.)
 ```
+
+<br><br>
 
 그리고, 화살표 함수에는 'this'가 없다는 특징을 가지고 있습니다.
 
