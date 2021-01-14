@@ -1,6 +1,6 @@
 ## Garbage Collection
 
----
+<br>
 
 - Garbage Collection
 

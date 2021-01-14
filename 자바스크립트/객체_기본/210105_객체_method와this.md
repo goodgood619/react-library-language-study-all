@@ -1,6 +1,5 @@
 ## Method와 This
 
----
 <br>
 
 ### Method
@@ -8,7 +7,7 @@
 ---
 
 
-객체 프로퍼티에 할당된 함수를 Method라고 부릅니다.
+`객체 프로퍼티에 할당된 함수를 Method`라고 부릅니다.
 
 ```jsx
 let user = {
@@ -54,7 +53,7 @@ let user = {
 user.sayHi(); // Jordan
 ```
 
-여기서 <span style = "color : red">'this'</span>는 런타임 값에 결정이 됩니다. 컨텍스트에 따라 달라집니다.
+여기서 `'this'는 런타임 값에 결정`이 됩니다. 컨텍스트에 따라 달라집니다.
 
 ```jsx
 let user = { name: "Jordan" };
