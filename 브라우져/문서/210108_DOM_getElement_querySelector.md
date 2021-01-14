@@ -37,7 +37,7 @@
 
 또 다른 방법으로는 **querySelector** 방법입니다.
 
-**elem.querySelector(css)**는 css 선택자에 해당하는 요소를 찾으면 검색을 멈춥니다.
+elem.querySelector(css)는 css 선택자에 해당하는 요소를 찾으면 검색을 멈춥니다.
 
 그래서 **elem.querySelectorAll(css) 방법보다 더 빠르다**는 장점이 있습니다.
 
@@ -47,7 +47,7 @@
 
 ---
 
-태그나 클래스 등을 이용해 원하는 노드를 찾아주는 메소드도 있습니다.
+태그나 클래스 등을 이용해 원하는 요소를 찾아주는 메소드도 있습니다.
 
 다만, **getElementsBy***는 지금은 잘 쓰이지 않습니다.
 
