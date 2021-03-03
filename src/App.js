@@ -6,7 +6,12 @@ import Dialog from './Dialog/index';
 import Chart from './BarChart/index';
 import RCTreeSelect from './RCTreeSelect/index';
 import ReactSpinnerSample from './ReactSpinners/index';
-
+import BlueprintButton from './BlueprintJS/Core/Button/index';
+import "@blueprintjs/core/lib/css/blueprint.css";
+import BreadCrumbs from './BlueprintJS/Core/Breadcrumbs';
+import CollapseExample from './BlueprintJS/Core/Collapse';
+import DropDownMenuExample from './BlueprintJS/Core/Menu/index';
+import ProgressBarExample from './BlueprintJS/Core/ProgressBar';
 
 function App() {
   return (
@@ -27,6 +32,11 @@ function App() {
         <Chart/>
         <RCTreeSelect/>
         <ReactSpinnerSample/>
+        <BlueprintButton/>
+        <BreadCrumbs/>
+        <CollapseExample/>
+        <DropDownMenuExample/>
+        <ProgressBarExample/>
       </>
       </ThemeProvider>
   );
