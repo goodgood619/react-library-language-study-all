@@ -12,6 +12,10 @@ import BreadCrumbs from './BlueprintJS/Core/Breadcrumbs';
 import CollapseExample from './BlueprintJS/Core/Collapse';
 import DropDownMenuExample from './BlueprintJS/Core/Menu/index';
 import ProgressBarExample from './BlueprintJS/Core/ProgressBar';
+import GridLayoutExample from './ReactGridLayout';
+import DialogExample from './BlueprintJS/Core/Dialog/index';
+import CircularProgressbarExample from './ReactCircularBar';
+
 
 function App() {
   return (
@@ -37,6 +41,9 @@ function App() {
         <CollapseExample/>
         <DropDownMenuExample/>
         <ProgressBarExample/>
+        <GridLayoutExample/>
+        <DialogExample/>
+        <CircularProgressbarExample/>
       </>
       </ThemeProvider>
   );
