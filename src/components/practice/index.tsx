@@ -1,32 +1,41 @@
 import React,{useState,useEffect} from 'react';
-import Cytoscape from 'cytoscape';
+import cytoscape from 'cytoscape';
 import CytoscapeComponent from 'react-cytoscapejs';
 
 // @ts-ignore
 import COSEBilkent from 'cytoscape-cose-bilkent';
 
+// @ts-ignore
+import panzoom from 'cytoscape-panzoom';
+// should use this css
+import "cytoscape-panzoom/cytoscape.js-panzoom.css";
+
 let cy : any;
-Cytoscape.use(COSEBilkent);
+cytoscape.use(COSEBilkent);
+cytoscape.use(panzoom);
 const CytoScapeExample = () => {
-  function hexToRgb ( hexType : string){ 
-    /* 맨 앞의 "#" 기호를 삭제하기. */ 
-    let hex = hexType.trim().replace( "#", "" ); 
-    
-    /* rgb로 각각 분리해서 배열에 담기. */ 
-    let rgb : any;
-    rgb = ( 3 === hex.length ) ?  hex.match( /[a-f\d]/gi ) : hex.match( /[a-f\d]{2}/gi );     
-    
-    rgb.forEach(function (str : any, x : any, arr : any){     
-        /* rgb 각각의 헥사값이 한자리일 경우, 두자리로 변경하기. */ 
-        if ( str.length == 1 ) str = str + str; 
-        
-        /* 10진수로 변환하기. */ 
-        arr[ x ] = parseInt( str, 16 ); 
-    }); 
-    
-    return "rgb(" + rgb.join(", ") + ")"; 
-} 
+  const defaults = {
+    zoomFactor: 0.05, // zoom factor per zoom tick
+    zoomDelay: 45, // how many ms between zoom ticks
+    minZoom: 0.1, // min zoom level
+    maxZoom: 10, // max zoom level
+    fitPadding: 50, // padding when fitting
+    panSpeed: 10, // how many ms in between pan ticks
+    panDistance: 10, // max pan distance per tick
+    panDragAreaSize: 75, // the length of the pan drag box in which the vector for panning is calculated (bigger = finer control of pan speed and direction)
+    panMinPercentSpeed: 0.25, // the slowest speed we can pan by (as a percent of panSpeed)
+    panInactiveArea: 8, // radius of inactive area in pan drag box
+    panIndicatorMinOpacity: 0.5, // min opacity of pan indicator (the draggable nib); scales from this to 1.0
+    zoomOnly: false, // a minimal version of the ui only with zooming (useful on systems with bad mousewheel resolution)
+    fitSelector: undefined, // selector of elements to fit
+    animateOnFit: function(){ // whether to animate on fit
+      return false;
+    },
+    fitAnimationDuration: 1000, // duration of animation on fit
+  
+  };
   useEffect(()=> {
+    cy.panzoom(defaults);
     const arr : any = [] ;
     const sourceNode = {
       classes : 'group1',
@@ -54,11 +63,11 @@ const CytoScapeExample = () => {
   });
 
   //
-  cy.$('aa').on('tap',(e: any)=> {
-    if(e.target.selected) {
-      e.target.style({'background-color' :'blue'});
-    }
-  });
+  // cy.$('aa').on('tap',(e: any)=> {
+  //   if(e.target.selected) {
+  //     e.target.style({'background-color' :'blue'});
+  //   }
+  // });
 
   // filter example by data using classes(group과 유사) and synchronous
   cy.batch(()=> {
@@ -126,6 +135,16 @@ const CytoScapeExample = () => {
               'background-color' : '#fdb',
               'label' : 'data(label)',
             }
+          },
+          {
+            selector : 'node:selected', // 단순히 selected만 주어도 가능함, event 없이
+            style : {
+              width : 20,
+              height : 20,
+              shape : 'round-tag',
+              backgroundColor : 'blue',
+              label : 'data(label)'
+            }
           }
     ];
 
@@ -134,20 +153,13 @@ const CytoScapeExample = () => {
       alert('no console anymore');
       cy.removeListener('tapstart mouseover');
     }
-    
-    const promiseOnExample = () => {
-      cy.promiseOn('tap').then((event : any)=> {
-        event.target._private.style["backgroundColor"] = hexToRgb('#398a39');
-        console.log(event);
-      });
-    };
-
+  
     return (
       <>
             <CytoscapeComponent
             elements={elements}
             stylesheet={stylesheet}
-            style={{width : '500px', height : '500px'}}
+            style={{width : '1000px', height : '1000px', background : 'green',marginLeft:'15%',marginRight:'15%'}}
             pan={{x : 100, y : 100}}
             cy={(cyValue : any)=>{
               cy = cyValue;
@@ -156,7 +168,6 @@ const CytoScapeExample = () => {
             layout={layout}
             />
             <button onClick={testClick}>test button</button>
-            <button onClick={promiseOnExample}>promise button</button>
       </>
     );
 };

@@ -3879,6 +3879,13 @@ cytoscape-cose-bilkent@^4.1.0:
   dependencies:
     cose-base "^1.0.0"
 
+cytoscape-panzoom@^2.5.3:
+  version "2.5.3"
+  resolved "https://registry.yarnpkg.com/cytoscape-panzoom/-/cytoscape-panzoom-2.5.3.tgz#edf041b5aa8be1cbe3c001f16a8b2193b46127a7"
+  integrity sha512-//qLOqbbFUCGddarNKHDZArItOJHgnkQ1TvxI9nV2/8aOOl/5wuEOHmra3fL/aWSjB4AYpYTG4LX7w96uWfRTQ==
+  dependencies:
+    jquery "^1.4 || ^2.0 || ^3.0"
+
 cytoscape@^3.18.1, cytoscape@^3.2.19:
   version "3.18.1"
   resolved "https://registry.yarnpkg.com/cytoscape/-/cytoscape-3.18.1.tgz#58197622f748c0eb24db7bdc7313c7cd96e6a10a"
@@ -6643,6 +6650,11 @@ jest@26.6.0:
     "@jest/core" "^26.6.0"
     import-local "^3.0.2"
     jest-cli "^26.6.0"
+
+"jquery@^1.4 || ^2.0 || ^3.0":
+  version "3.6.0"
+  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.6.0.tgz#c72a09f15c1bdce142f49dbf1170bdf8adac2470"
+  integrity sha512-JVzAR/AjBvVt2BmYhxRCSYysDsPcssdmTFnzyLEts9qNwmjmu4JTAMYubEfwVOSwpQ1I1sKKFcxhZCI2buerfw==
 
 "js-tokens@^3.0.0 || ^4.0.0", js-tokens@^4.0.0:
   version "4.0.0"
