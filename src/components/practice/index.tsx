@@ -39,11 +39,11 @@ const CytoScapeExample = () => {
     const arr : any = [] ;
     const sourceNode = {
       classes : 'group1',
-      data: { id: 'n1', label: 'n1' }, position: { x: 50, y: 50 }, 
+      data: { id: 'n1', label: 'n1',parent :'nparent' }, position: { x: 50, y: 50 }, 
     };
     const targetNode = {
       classes : 'group1',
-      data : {id : 'n2',label : 'n2',position : {x : 100, y: 100}},
+      data : {id : 'n2',label : 'n2',parent : 'nparent',position : {x : 100, y: 100}},
     }
     const testEdge = {
       classes : 'group1',
@@ -84,12 +84,13 @@ const CytoScapeExample = () => {
 
     // sample elements
     const elements = [
-        { classes : 'aa',data: { id: 'one', label: 'Node 1' }, position: { x: 300, y: 300 } },
-        { classes : 'aa',data: { id: 'two', label: 'Node 2' }, position: { x: 400, y: 400 } },
-        { classes : 'aa',data: { id : 's1',source: 'one', target: 'two', label: 'Edge from Node1 to Node2' } },
-        {classes : 'aa',data : {id : 'three', label : 'Node 3'},position : {x : 200, y : 100}},
-        {classes : 'aa',data : {id : 's3',source : 'two', target : 'three'},label :'Edge from Node2 to Node3'},
-        {classes : 'aa',data : {id :'s2',source : 'three', target : 'one'},label : 'Edge from Node3 to Node1'},
+        {data : {id : 'p1'}},
+        {data: { id: 'one', label: 'port1',parent:'p1' }, position: { x: 300, y: 300 } },
+        {data: { id: 'two', label: 'port2',parent: 'p1' }, position: { x: 300, y: 400 } },
+        {data: { id : 's1', source: 'one', target: 'two', label: 'Edge from Node1 to Node2' } },
+        {data : {id : 'three', label : 'port3'},position : {x : 200, y : 100}},
+        {data : {id : 's3', source : 'two', target : 'three'},label :'Edge from Node2 to Node3'},
+        {data : {id :'s2', source : 'three', target : 'one'}, label : 'Edge from Node3 to Node1'},
      ];
 
     const layout = { name: 'random' };
@@ -100,12 +101,17 @@ const CytoScapeExample = () => {
             style: {
                 width : 20,
                 height : 20,
-                shape : 'rectangle',
-              backgroundColor: '#666',
-              label: 'data(label)'
+                shape : 'circle',
+                backgroundColor: 'gray',
+                label: 'data(label)'
             }
           },
-      
+          {
+            selector : ':parent',
+            style : {
+                backgroundOpacity : 0.5
+            }
+          },
           {
             selector: 'edge',
             style: {
@@ -135,17 +141,18 @@ const CytoScapeExample = () => {
               'background-color' : '#fdb',
               'label' : 'data(label)',
             }
-          },
-          {
-            selector : 'node:selected', // 단순히 selected만 주어도 가능함, event 없이
-            style : {
-              width : 20,
-              height : 20,
-              shape : 'round-tag',
-              backgroundColor : 'blue',
-              label : 'data(label)'
-            }
           }
+          // ,
+          // {
+          //   selector : 'node:selected', // 단순히 selected만 주어도 가능함, event 없이
+          //   style : {
+          //     width : 20,
+          //     height : 20,
+          //     shape : 'round-tag',
+          //     backgroundColor : 'blue',
+          //     label : 'data(label)'
+          //   }
+          // }
     ];
 
     // test remove listener
