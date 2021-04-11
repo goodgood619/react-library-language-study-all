@@ -1,6 +1,7 @@
 import React,{useState,useEffect} from 'react';
 import cytoscape from 'cytoscape';
 import CytoscapeComponent from 'react-cytoscapejs';
+import {observer} from 'mobx-react-lite';
 // import Select from 'react-select';
 
 // @ts-ignore
@@ -10,67 +11,10 @@ import COSEBilkent from 'cytoscape-cose-bilkent';
 import panzoom from 'cytoscape-panzoom';
 // should use this css
 import "cytoscape-panzoom/cytoscape.js-panzoom.css";
-// sample elements
-const elements = [
-      {data : {id : 'CMX1',label : 'CMX16A-W35', node : 'CMX',colored : 'blue'},position : {x : 500, y : 500}},
-      {data : {id : 'CMX2',label : 'CMX16A-W53', node : 'CMX',colored : 'blue'},position : {x : 500, y: 600}},
-      {data : {id : 'CMX3',label : 'CMX16A-W55',node : 'CMX',colored : 'blue'},position : {x : 500, y : 700}},
-      {data : {id : 'LIM1',label : 'LIM-3C',node : 'LIM',colored : 'blue'},position : {x : 600, y : 600}},
-      {data : {id : 'LIM2',label : 'LID-6C',node : 'LID',colored : 'blue'},position : {x : 700, y : 600}},
-      {data : {id : 'SRN1',label : 'SRN8A-35L',node : 'SRN',colored : 'blue'},position : {x : 800, y : 300}},
-      {data : {id : 'SRN2',label : 'SRN8A-35H',node : 'SRN',colored : 'blue'},position : {x : 800, y : 400}},
-      {data : {id : 'SRN3',label : 'SRN8A-53L',node : 'SRN',colored : 'blue'},position : {x : 800, y : 500}},
-      {data : {id : 'SRN4',label : 'SRN8A-53H',node : 'SRN',colored : 'blue'},position : {x : 800, y : 600}},
-      {data : {id : 'SRN5',label : 'SRN8A-55L',node : 'SRN',colored : 'blue'},position : {x : 800, y : 700}},
-      {data : {id : 'SRN6',label : 'SRN8A-55H',node : 'SRN',colored : 'blue'},position : {x : 800, y : 800}},
-      {data : {id : 'OTS1',label : 'OTS',node : 'OTS',colored : 'red'}, position : {x : 900, y : 300}},
-      {data : {id : 'OTS2',label : 'OTS',node : 'OTS',colored : 'red'},position : {x : 900, y : 400}},
-      {data : {id : 'OTS3',label : 'OTS',node : 'OTS',colored : 'red'},position : {x : 900, y : 500}},
-      {data : {id : 'OTS4',label : 'OTS',node : 'OTS',colored : 'red'},position : {x : 900, y : 600}},
-      {data : {id : 'OTS5',label : 'OTS',node : 'OTS',colored : 'red'},position : {x : 900, y : 700}},
-      {data : {id : 'OTS6',label : 'OTS',node : 'OTS',colored : 'red'},position : {x : 900, y : 800}},
-      {data : {id : 'RU1',label : 'RU',node : 'RU',colored : 'red'},position : {x : 1000, y : 300}},
-      {data : {id : 'RU2',label : 'RU',node : 'RU',colored : 'red'},position : {x : 1000, y : 400}},
-      {data : {id : 'RU3',label : 'RU',node : 'RU',colored : 'red'},position : {x : 1000, y : 500}},
-      {data : {id : 'RU4',label : 'RU',node : 'RU',colored : 'red'},position : {x : 1000, y : 600}},
-      {data : {id : 'RU5',label : 'RU',node : 'RU',colored : 'red'},position : {x : 1000, y : 700}},
-      {data : {id : 'RU6',label : 'RU',node : 'RU',colored : 'red'},position : {x : 1000, y : 800}},
-      {data : {id : 's4',source : 'CMX1',target : 'LIM1'}},
-      {data : {id : 's5',source : 'CMX2',target : 'LIM1'}},
-      {data : {id : 's6',source : 'CMX3',target : 'LIM1'}},
-      {data : {id : 's7',source : 'LIM1',target : 'LIM2', colored: "yellow"}},
-      {data : {id : 's8',source : 'LIM2',target : 'LIM1', colored : "yellow"}},
-      {data : {id : 's9',source : 'SRN1',target : 'LIM2'}},
-      {data : {id : 's10',source : 'SRN2',target : 'LIM2'}},
-      {data : {id : 's11',source : 'SRN3',target : 'LIM2'}},
-      {data : {id : 's12',source : 'SRN4',target : 'LIM2'}},
-      {data : {id : 's13',source : 'SRN5',target : 'LIM2'}},
-      {data : {id : 's14',source : 'SRN6',target : 'LIM2'}},
-      {data : {id : 's15',source : 'OTS1',target : 'SRN1'}},
-      {data : {id : 's16',source : 'OTS2',target : 'SRN2'}},
-      {data : {id : 's17',source : 'OTS3',target : 'SRN3'}},
-      {data : {id : 's18',source : 'OTS4',target : 'SRN4'}},
-      {data : {id : 's19',source : 'OTS5',target : 'SRN5'}},
-      {data : {id : 's20',source : 'OTS6',target : 'SRN6'}},
-      {data : {id : 's21',source : 'RU1',target : 'OTS1'}},
-      {data : {id : 's22',source : 'RU2',target : 'OTS2'}},
-      {data : {id : 's23',source : 'RU3',target : 'OTS3'}},
-      {data : {id : 's24',source : 'RU4',target : 'OTS4'}},
-      {data : {id : 's25',source : 'RU5',target : 'OTS5'}},
-      {data : {id : 's26',source : 'RU6',target : 'OTS6'}},
-   ];
 let cy : any;
 cytoscape.use(COSEBilkent);
 cytoscape.use(panzoom);
-const CytoScapeExample = () => {
-  const options = [
-    {value : 'WDM-PON-P2P',label : 'WDM-PON-P2P'},
-    {value : 'WDM-PON-Cascade',label : 'WDM-PON-Cascade'},
-    {value : 'WDM-PON-P2P_Protection',label : 'WDM-PON-P2P_Protection'},
-    {value : 'WDM-PON-P2P_RingProtection',label : 'WDM-PON-P2P_RingProtection'},
-  ];
-  const [selectedOptions,setSelectedOptions] = useState<any>(options);
-
+const CytoScapeExample = observer((props : {elements : any}) => {
   const defaults = {
     zoomFactor: 0.05, // zoom factor per zoom tick
     zoomDelay: 45, // how many ms between zoom ticks
@@ -145,10 +89,10 @@ const CytoScapeExample = () => {
         {
             selector: 'node',
             style: {
-                width : 100,
-                height : 100,
+                width : 60,
+                height : 60,
                 shape : 'rectangle',
-                borderWidth : 5,
+                borderWidth : 1.5,
                 borderStyle : 'solid',
                 borderColor : function(node : any){
                   if(node.data("colored") === "blue") {
@@ -178,9 +122,31 @@ const CytoScapeExample = () => {
                   }
                   else if(node.data("node") === "RU") {
                     return "./image/RU.PNG";
+                  } 
+                  else if(node.data("node") === 'DU') {
+                    return "./image/DU.PNG";
+                  }
+                  else if(node.data("node") === "IA") {
+                    return "./image/IA.PNG";
+                  }
+                  else if(node.data("node") === "OCM") {
+                    return "./image/OCM.PNG";
+                  }
+                  else if(node.data("node")=== 'CRN') {
+                    return "./image/CRN.PNG";
+                  }
+                  else if(node.data("node") === 'IA2') {
+                    return "./image/IA2.PNG";
+                  }
+                  else if(node.data("node") === 'LMU') {
+                    return "./image/LMU.PNG";
+                  }
+                  else if(node.data("node") === 'LSU') {
+                    return "./image/LSU.PNG";
                   }
                 },
                 backgroundImageOpacity : 1,
+                backgroundFit : `cover`, // backgroundimage를 node크기에 맞게 정확히 삽입 
             }
           },
           {
@@ -192,16 +158,20 @@ const CytoScapeExample = () => {
           {
             selector: 'edge',
             style: {
-              'width': 1,
+              'width': 2,
               'line-color': function(node : any) {
-                if(node.data("colored") === "blue") {
+                if(node._private.data.colored === 'blue') {
                   return "blue";
                 }
-                else if(node.data("colored") === "yellow") {
-                  return "yellow";
+                else if(node._private.data.colored === 'yellow') {
+                  return "#ffe135";
+                } 
+                else if(node._private.data.colored === 'orange') {
+                  return "orange";
                 }
+                else return "gray";
               },
-              'target-arrow-color': 'blue',
+              // 'target-arrow-color': 'blue',
               'curve-style': 'bezier',
             }
           },
@@ -247,7 +217,7 @@ const CytoScapeExample = () => {
     return (
       <>
             <CytoscapeComponent
-            elements={elements}
+            elements={props.elements}
             stylesheet={stylesheet}
             style={{width : '1400px', height : '700px'}}
             pan={{x : 100, y : 100}}
@@ -259,6 +229,6 @@ const CytoScapeExample = () => {
             />
       </>
     );
-};
+});
 
 export default CytoScapeExample;
