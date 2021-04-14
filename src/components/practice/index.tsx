@@ -2,7 +2,6 @@ import React,{useState,useEffect} from 'react';
 import cytoscape from 'cytoscape';
 import CytoscapeComponent from 'react-cytoscapejs';
 import {observer} from 'mobx-react-lite';
-// import Select from 'react-select';
 
 // @ts-ignore
 import COSEBilkent from 'cytoscape-cose-bilkent';
@@ -171,8 +170,31 @@ const CytoScapeExample = observer((props : {elements : any}) => {
                 }
                 else return "gray";
               },
-              // 'target-arrow-color': 'blue',
+              'target-arrow-color': 'blue',
               'curve-style': 'bezier',
+              'label' : 'data(id)',
+              'rendered-source-endpoint' : function(node : any) {
+                if(node.data("group") === 'LMU') {
+                  if(node.data("id") === 'e10') {
+                      return '30% 30%';
+                  }
+                }
+                else if(node.data("group") === 'LSU') {
+                  if(node.data("id") === 'e8') {
+                      return '50% 30%';
+                  }
+                  else if(node.data("id") === 'e9') {
+                      return '50% 30%';
+                  }
+                  else if(node.data("id") === 'e39') {
+                      return '50% -30%';
+                  }
+                  else if(node.data("id") === 'e40') {
+                      return '50% -30%';
+                  }
+                }
+              },
+              'target-endpoint' : '0% 30%',
             }
           },
           // {
