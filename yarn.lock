@@ -1741,13 +1741,6 @@
   dependencies:
     "@babel/types" "^7.3.0"
 
-"@types/cytoscape-edgehandles@^3.6.0":
-  version "3.6.0"
-  resolved "https://registry.yarnpkg.com/@types/cytoscape-edgehandles/-/cytoscape-edgehandles-3.6.0.tgz#530cd2431a965fe1600645acabc6da29278170de"
-  integrity sha512-27306aMc+NkZwkKSSlXKOASN/bGOWG8yvytJ4pc9agRgVFq8oqMduTHA4/hyY/+8TrzDJ3Uu0azH2NsuUfexJQ==
-  dependencies:
-    "@types/cytoscape" "*"
-
 "@types/cytoscape@*", "@types/cytoscape@^3.14.12":
   version "3.14.12"
   resolved "https://registry.yarnpkg.com/@types/cytoscape/-/cytoscape-3.14.12.tgz#b46c445da97df76d486c5b3b25554f616deefd41"
@@ -3974,14 +3967,6 @@ cytoscape-cose-bilkent@^4.1.0:
   integrity sha512-wgQlVIUJF13Quxiv5e1gstZ08rnZj2XaLHGoFMYXz7SkNfCDOOteKBE6SYRfA9WxxI/iBc3ajfDoc6hb/MRAHQ==
   dependencies:
     cose-base "^1.0.0"
-
-cytoscape-edgehandles@^3.6.0:
-  version "3.6.0"
-  resolved "https://registry.yarnpkg.com/cytoscape-edgehandles/-/cytoscape-edgehandles-3.6.0.tgz#daba87b424c6d17ceada1a4be82ec6b094410bfd"
-  integrity sha512-XUzz+zmK42cN6l8uV7b66uUIZruAGgtgrfj/iuUOoCDWHMExARCS23bUju3Pqxywafe75Te3prXH0jrnZ+fYxw==
-  dependencies:
-    lodash.memoize "^4.1.2"
-    lodash.throttle "^4.1.1"
 
 cytoscape-panzoom@^2.5.3:
   version "2.5.3"
@@ -7125,11 +7110,6 @@ lodash.templatesettings@^4.0.0:
   integrity sha512-stgLz+i3Aa9mZgnjr/O+v9ruKZsPsndy7qPZOchbqk2cnTU1ZaldKK+v7m54WoKIyxiuMZTKT2H81F8BeAc3ZQ==
   dependencies:
     lodash._reinterpolate "^3.0.0"
-
-lodash.throttle@^4.1.1:
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/lodash.throttle/-/lodash.throttle-4.1.1.tgz#c23e91b710242ac70c37f1e1cda9274cc39bf2f4"
-  integrity sha1-wj6RtxAkKscMN/HhzaknTMOb8vQ=
 
 lodash.uniq@^4.5.0:
   version "4.5.0"

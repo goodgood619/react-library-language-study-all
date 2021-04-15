@@ -1,6 +1,4 @@
-import { observer } from 'mobx-react';
 import Select from 'react-select';
-import SampleSelectStore from '../../store/Select';
 const SelectBox = (props : {handle : any}) => {
     
     const options = [
