@@ -177,9 +177,7 @@ const CytoScapeExample = observer((props : {elements : any}) => {
               'label' : 'data(id)',
               'source-endpoint' : function(node : any) {
                 if(node.data("group") === 'LMU') {
-                  if(node.data("id") === 'e10') {
-                      return '30% 30%';
-                  }
+                  return '50% 0%';
                 }
                 else if(node.data("group") === 'LSU') {
                   if(node.data("id") === 'e8') {
@@ -198,7 +196,7 @@ const CytoScapeExample = observer((props : {elements : any}) => {
               },
               'target-endpoint' : function(node : any) {
                 if(node.data("id") === 'e8') {
-                  return '-50% -10%';
+                  return '-50% 0%';
                 }
                 else if(node.data("id") === 'e9') {
                     return '-50% 30%';
@@ -207,11 +205,19 @@ const CytoScapeExample = observer((props : {elements : any}) => {
                     return '-50% -30%';
                 }
                 else if(node.data("id") === 'e40') {
-                    return '-50% 10%';
+                    return '-50% 0%';
+                }
+                else if(node.data("group") === 'CMX') {
+                  return '-50% 0%';
+                }
+                else if(node.data("group") === 'SRN') {
+                  return '50% 0%';
+                }
+                else if(node.data("group") === 'LMU') {
+                  return '-50% 0%';
                 }
               },
               'text-margin-y' : 10, // set edge y position
-
             },
           },
 
