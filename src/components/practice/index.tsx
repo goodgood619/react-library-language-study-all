@@ -2,6 +2,8 @@ import React,{useState,useEffect} from 'react';
 import cytoscape from 'cytoscape';
 import CytoscapeComponent from 'react-cytoscapejs';
 import {observer} from 'mobx-react-lite';
+
+import Modal from 'react-modal';
 // import Select from 'react-select';
 
 // @ts-ignore
@@ -11,10 +13,21 @@ import COSEBilkent from 'cytoscape-cose-bilkent';
 import panzoom from 'cytoscape-panzoom';
 // should use this css
 import "cytoscape-panzoom/cytoscape.js-panzoom.css";
+
+import Dialog from '../dialog/index';
+
 let cy : any;
 cytoscape.use(COSEBilkent);
 cytoscape.use(panzoom);
+interface NodeInfo {
+  node? : string | undefined;
+  label? : string | undefined;
+}
 const CytoScapeExample = observer((props : {elements : any}) => {
+  const [selectedNode, setSelectedNode] = useState<boolean>(false);
+  const [selectedNodeLabel,setSelectedNodeLabel] = useState<string>();
+  const [selectedNodeName,setSelectedNodeName] = useState<string>();
+
   const defaults = {
     zoomFactor: 0.05, // zoom factor per zoom tick
     zoomDelay: 45, // how many ms between zoom ticks
@@ -62,6 +75,11 @@ const CytoScapeExample = observer((props : {elements : any}) => {
     console.log('tapstart mouseover node: ',e);
   });
 
+  cy.on('click','node',(e:any)=> {
+    setSelectedNode(true);
+    setSelectedNodeLabel(e.target._private.data.label);
+    setSelectedNodeName(e.target._private.data.node);
+  });
   //
   // cy.$('aa').on('tap',(e: any)=> {
   //   if(e.target.selected) {
@@ -82,6 +100,7 @@ const CytoScapeExample = observer((props : {elements : any}) => {
   });
 
   },[]);
+
 
     const layout = { name: 'preset' };
 
@@ -260,6 +279,10 @@ const CytoScapeExample = observer((props : {elements : any}) => {
       cy.removeListener('tapstart mouseover');
     }
   
+    const handlecloseModal = () => {
+      setSelectedNode(false);
+    }
+
     return (
       <>
             <CytoscapeComponent
@@ -273,6 +296,21 @@ const CytoScapeExample = observer((props : {elements : any}) => {
             zoom={2}
             layout={layout}
             />
+            <Modal
+              isOpen = {selectedNode}
+              onRequestClose={handlecloseModal}
+              >
+
+               <h2>
+                {selectedNodeLabel}
+               </h2>
+               <h3>
+                 {selectedNodeName}
+               </h3>
+              <button onClick={handlecloseModal}>
+                Close
+              </button>
+            </Modal>
       </>
     );
 });
