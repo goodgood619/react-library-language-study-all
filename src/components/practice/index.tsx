@@ -1,7 +1,13 @@
-import React,{useState,useEffect} from 'react';
+import React,{useState,useEffect,useRef} from 'react';
 import cytoscape from 'cytoscape';
 import CytoscapeComponent from 'react-cytoscapejs';
 import {observer} from 'mobx-react-lite';
+
+import FreeSampleSvg from '../../svg/Freesample';
+import Bmp from '../../svg/BMP';
+import BmpUnit1 from '../../svg/BMP_unit1';
+import BmpUnit2 from '../../svg/BMP_unit2';
+import {ReactSVG} from 'react-svg';
 
 import Modal from 'react-modal';
 // import Select from 'react-select';
@@ -23,10 +29,16 @@ interface NodeInfo {
   node? : string | undefined;
   label? : string | undefined;
 }
+
+interface SvgPosition {
+  x? : number | undefined;
+  y? : number | undefined;
+}
 const CytoScapeExample = observer((props : {elements : any}) => {
   const [selectedNode, setSelectedNode] = useState<boolean>(false);
   const [selectedNodeLabel,setSelectedNodeLabel] = useState<string>();
   const [selectedNodeName,setSelectedNodeName] = useState<string>();
+  const [svgPos, setSvgPos] = useState<SvgPosition>({x : 0, y : 0});
 
   const defaults = {
     zoomFactor: 0.05, // zoom factor per zoom tick
@@ -281,7 +293,15 @@ const CytoScapeExample = observer((props : {elements : any}) => {
   
     const handlecloseModal = () => {
       setSelectedNode(false);
+      setSvgPos({x : 0, y : 0});
     }
+
+    const handlePos = (pos : any) => {
+      console.log('pos : ',pos);
+      const x = pos.pageX;
+      const y = pos.pageY;
+      setSvgPos({x : x,y : y});
+    };
 
     return (
       <>
@@ -300,13 +320,20 @@ const CytoScapeExample = observer((props : {elements : any}) => {
               isOpen = {selectedNode}
               onRequestClose={handlecloseModal}
               >
-
+                <div>
+                <Bmp 
+                poshandle = {handlePos}
+                />
+                </div>
                <h2>
                 {selectedNodeLabel}
                </h2>
                <h3>
                  {selectedNodeName}
                </h3>
+               <div>
+                  클릭된 위치 : {svgPos.x}, {svgPos.y}
+               </div>
               <button onClick={handlecloseModal}>
                 Close
               </button>
