@@ -1,13 +1,10 @@
-import React,{useState,useEffect,useRef} from 'react';
+import React,{useState,useEffect} from 'react';
 import cytoscape from 'cytoscape';
 import CytoscapeComponent from 'react-cytoscapejs';
 import {observer} from 'mobx-react-lite';
 
 import FreeSampleSvg from '../../svg/Freesample';
 import Bmp from '../../svg/BMP';
-import BmpUnit1 from '../../svg/BMP_unit1';
-import BmpUnit2 from '../../svg/BMP_unit2';
-import {ReactSVG} from 'react-svg';
 
 import Modal from 'react-modal';
 // import Select from 'react-select';
@@ -19,8 +16,6 @@ import COSEBilkent from 'cytoscape-cose-bilkent';
 import panzoom from 'cytoscape-panzoom';
 // should use this css
 import "cytoscape-panzoom/cytoscape.js-panzoom.css";
-
-import Dialog from '../dialog/index';
 
 let cy : any;
 cytoscape.use(COSEBilkent);
@@ -39,6 +34,7 @@ const CytoScapeExample = observer((props : {elements : any}) => {
   const [selectedNodeLabel,setSelectedNodeLabel] = useState<string>();
   const [selectedNodeName,setSelectedNodeName] = useState<string>();
   const [svgPos, setSvgPos] = useState<SvgPosition>({x : 0, y : 0});
+  const [selectedNodeclassName,setSelectedNodeclassName] = useState<string>("");
 
   const defaults = {
     zoomFactor: 0.05, // zoom factor per zoom tick
@@ -294,13 +290,16 @@ const CytoScapeExample = observer((props : {elements : any}) => {
     const handlecloseModal = () => {
       setSelectedNode(false);
       setSvgPos({x : 0, y : 0});
+      setSelectedNodeclassName("");
     }
 
     const handlePos = (pos : any) => {
       console.log('pos : ',pos);
       const x = pos.pageX;
       const y = pos.pageY;
+      const nodeName = pos.target.className.baseVal;
       setSvgPos({x : x,y : y});
+      setSelectedNodeclassName(nodeName);
     };
 
     return (
@@ -319,13 +318,14 @@ const CytoScapeExample = observer((props : {elements : any}) => {
             <Modal
               isOpen = {selectedNode}
               onRequestClose={handlecloseModal}
-              >
+              ><div>
                 <div>
                 <Bmp 
-                poshandle = {handlePos}
+                  poshandle = {handlePos}
                 />
                 </div>
-               <h2>
+                <div>
+                <h2>
                 {selectedNodeLabel}
                </h2>
                <h3>
@@ -333,6 +333,10 @@ const CytoScapeExample = observer((props : {elements : any}) => {
                </h3>
                <div>
                   클릭된 위치 : {svgPos.x}, {svgPos.y}
+                  <br/>
+                  클릭된 장비 : {selectedNodeclassName}
+               </div>
+                </div>
                </div>
               <button onClick={handlecloseModal}>
                 Close
