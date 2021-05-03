@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@ag-grid-community/all-modules": "^25.2.0",
+    "@ag-grid-community/core": "^25.2.0",
+    "@ag-grid-community/react": "^25.2.0",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
@@ -14,6 +17,7 @@
     "@types/react-dom": "^17.0.0",
     "@types/react-modal": "^3.12.0",
     "@types/react-select": "^4.0.14",
+    "ag-grid-community": "^25.2.0",
     "cytoscape": "^3.18.1",
     "cytoscape-cose-bilkent": "^4.1.0",
     "cytoscape-panzoom": "^2.5.3",

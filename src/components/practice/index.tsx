@@ -324,7 +324,9 @@ const CytoScapeExample = observer((props: { elements: any }) => {
             <div
             
             style={{
-              margin : '0 0 0 5%'
+              margin : '0 0 0 5%',
+              border: '1px solid black',
+              borderRadius : '1px',
             }}>
             <h2>
               {selectedNodeLabel}
