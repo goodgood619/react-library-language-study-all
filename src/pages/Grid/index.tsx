@@ -10,11 +10,67 @@ const SampleGrid = () => {
   const [rowData, setRowData] = useState<Array<any>>(new RowDataFactory().createRowData());
 
 
+  const columnDefs = [
+    {
+      field : "groups",
+      headerName : "GROUPS",
+      filter :"agTextColumnFilter",
+      sortable : true,
+      editable: true,
+    },
+    {
+      field : "nodes",
+      headerName : "NODES",
+      sortable : true,
+      editable: true,
+    },
+    {
+      field : "aids",
+      headerName : "AIDS",
+      sortable : true,
+      editable: true,
+    },{
+      field : "units",
+      headerName : "UNITS",
+      filter :"agTextColumnFilter",
+      sortable : true,
+      editable: true,
+    },{
+      field : "hardware",
+      headerName : "HardWare Version",
+      filter :"agTextColumnFilter",
+      sortable : true,
+      editable: true,
+    },
+    {
+      field : "software",
+      headerName : "SoftWare Version",
+      sortable : true,
+    },
+    {
+      field : "serialNumber",
+      headerName : "Serial Number",
+      sortable : true,
+    },{
+      field : "proficiency",
+      width : 180,
+      cellRendererFramework:SampleProgressBar,
+      filter :"agTextColumnFilter",
+      sortable : true,
+      editable: true,
+    },{
+      field : "result",
+      headerName : "RESULT",
+      sortable : true,
+    }
+  ];
   useEffect(()=> {
-    // 1초마다 Proficiency 업데이트
+    // 10초마다 Proficiency 업데이트
     setTimeout(
       ()=> setRowData(new RowDataFactory().createRowData())
       ,1000);
+
+      console.log('rowData is changed?',rowData);
   },[rowData]);
 
   const rowSelected = (e : any) => {
@@ -22,13 +78,15 @@ const SampleGrid = () => {
   };
   
   const IsExternalFilterPresent = () => {
-    
     return true;
   };
 
   const doesExternalFilterPass = (node : any) => {
-    console.log('doesExternalFilterPass node : ',node);
-    return true;
+    // proficiency가 20이상인것만 보여짐
+    if(node.data.proficiency >= 20) {
+      return true;
+    }
+    return false;
   };
 
   return (
@@ -40,66 +98,17 @@ const SampleGrid = () => {
       }}
     >
       <AgGridReact 
+      columnDefs={columnDefs}
       rowData={rowData} 
       modules={AllCommunityModules}
+      enableBrowserTooltips={true}
       rowSelection="multiple"
       onRowSelected={rowSelected}
       isExternalFilterPresent={IsExternalFilterPresent}
-      doesExternalFilterPass={doesExternalFilterPass}>
-        <AgGridColumn
-            field="groups"
-            headerName="GROUPS"
-            filter="agTextColumnFilter"
-            sortable={true}
-        />
-        <AgGridColumn
-            field="nodes"
-            headerName="NODES"
-            sortable={true}
-        />
-        <AgGridColumn
-            field="aids"
-            headerName="AIDS"
-            sortable={true}
-        />
-        <AgGridColumn
-            field="units"
-            headerName="UNITS"
-            filter="agTextColumnFilter"
-            sortable={true}
-        />
-        <AgGridColumn
-            field="hardware"
-            headerName="HARDWARE"
-            sortable={true}
-        />
-        <AgGridColumn
-            field="fpga"
-            headerName="FPGA Version"
-            filter="agNumberColumnFilter"
-            sortable={true} // 오름차순 내림차순 가능
-        />
-        <AgGridColumn
-            field="software"
-            headerName="SoftWare Version"
-            sortable={true}
-        />
-        <AgGridColumn
-            field="serialNumber"
-            headerName="Serial Number"
-            sortable={true}
-        />
-        <AgGridColumn
-          field="proficiency"
-          width={180}
-          
-          cellRendererFramework={SampleProgressBar}
-        />
-        <AgGridColumn
-            field="result"
-            headerName="RESULT"
-            sortable={true}
-        />
+      doesExternalFilterPass={doesExternalFilterPass}
+      multiSortKey={'ctrl'}
+
+      >
       </AgGridReact>
     </div>
   );

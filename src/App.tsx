@@ -7,6 +7,7 @@ import SampleGrid from './pages/Grid';
 function App() {
   return (
     <>
+    <Sample/>
     <SampleGrid/>
     </>
   );
