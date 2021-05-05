@@ -1,4 +1,4 @@
-import { AgGridReact, AgGridColumn } from "@ag-grid-community/react";
+import { AgGridReact } from "@ag-grid-community/react";
 import SampleProgressBar from "../../components/ProgressBar/index";
 import { useEffect, useState } from "react";
 import RowDataFactory from "../../utils/RowDataFactory";
@@ -18,8 +18,8 @@ const SampleGrid = () => {
       field : "button",
       width : 50,
       checkboxSelection : true,   
-      headerCheckboxSelection: true,
-      headerCheckboxSelectionFilteredOnly: true,
+      headerCheckboxSelection: true, // check 필요
+      headerCheckboxSelectionFilteredOnly: true, //check 필요
     },
     {
       field : "groups",
@@ -78,7 +78,7 @@ const SampleGrid = () => {
     // 10초마다 Proficiency 업데이트
     setTimeout(
       ()=> setRowData(new RowDataFactory().createRowData())
-      ,10000);
+      ,10000000);
 
       console.log('rowData is changed?',rowData);
   },[rowData]);
@@ -94,6 +94,12 @@ const SampleGrid = () => {
 
   const selectionChanged = () => {
       const selectedRows = gridApi.getSelectedRows();
+      const getRowGroupColumns = columnApi.getRowGroupColumns();
+      const getValueColumns = columnApi.getValueColumns();
+      const getPivotColumns = columnApi.getPivotColumns();
+      const getAllGridColumns = columnApi.getAllGridColumns();
+      const getColumnGroup = columnApi.getColumnGroup('UNITS'); // not work
+
       console.log('selectedRows :  ',selectedRows);  
   };
   
@@ -115,6 +121,18 @@ const SampleGrid = () => {
       fileName: 'testexport',
     };
     gridApi.exportDataAsCsv(params);
+  };
+
+  const cellValueChanged = (e : any) => {
+    console.log('edited data : ',e.data);
+    console.log('edited Index',e.rowIndex);
+
+    let newRowData = rowData.map((value : any,index : number)=> {
+      return index === e.rowIndex ? {...value,data : e.data} : value
+    });
+
+    console.log('when edited newRowData',newRowData);
+    // setRowData(newRowData); 
   };
 
   return (
@@ -141,6 +159,7 @@ const SampleGrid = () => {
       doesExternalFilterPass={doesExternalFilterPass}
       multiSortKey={'ctrl'}
       onSelectionChanged={selectionChanged}
+      onCellValueChanged={cellValueChanged}
       >
       </AgGridReact>
     </div>
