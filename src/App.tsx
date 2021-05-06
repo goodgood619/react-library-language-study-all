@@ -8,7 +8,6 @@ import "@blueprintjs/core/lib/css/blueprint.css";
 function App() {
   return (
     <>
-    <Sample/>
     <SampleGrid/>
     </>
   );
