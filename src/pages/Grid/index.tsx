@@ -15,6 +15,7 @@ import SampleButton from "../../button/index";
 import { EditableText } from "@blueprintjs/core";
 
 interface RowDataType {
+  index?: number | undefined;
   aids?: string | undefined;
   fpga?: string | undefined;
   groups?: string | undefined;
@@ -27,14 +28,11 @@ interface RowDataType {
   units?: string | undefined;
 }
 const SampleGrid = () => {
-  const [rowData, setRowData] = useState<Array<any>>(
-    new RowDataFactory().createRowData()
-  );
+  const [rowData, setRowData] = useState<any>(new RowDataFactory().createRowData());
   const [gridApi, setGridApi] = useState<any>();
   const [columnApi, setColumnApi] = useState<any>();
   const [selectedRow, setSelectedRow] = useState<boolean>(false);
   const [selectedRowData, setSelectedRowData] = useState<RowDataType>({});
-  const [selectedDeleteIndex,setSelectedDeleteIndex] = useState<number>();
 
   const selectedHandler = (e: any) => {
     console.log("selectedHandler : ", e.data);
@@ -52,13 +50,13 @@ const SampleGrid = () => {
     // setSelectedDeleteIndex();
   };
 
-  const rowDeleteHandle = (deleteIndex : number) => {
-    let newRowData = rowData.filter((value : any,index : number)=> {
-        return index !== deleteIndex;
+  const rowDeleteHandle = (deleteIndex: number) => {
+    let newRowData = rowData.filter((value: any, index: number) => {
+      return index !== deleteIndex;
     });
     setRowData(newRowData);
   };
-  
+
   const columnDefs = [
     // {
     //   field : "button",
@@ -71,7 +69,7 @@ const SampleGrid = () => {
       field: "EditDelete",
       headerName: "EditDelete",
       cellRendererFramework: SampleEditDeleteButton,
-      cellRendererParams: { method: handleSelectedRow, method2 : rowDeleteHandle },
+      cellRendererParams: { method: handleSelectedRow, method2: rowDeleteHandle },
     },
     {
       field: "groups",
@@ -79,6 +77,10 @@ const SampleGrid = () => {
       filter: "agTextColumnFilter",
       sortable: true,
       editable: true,
+      cellStyle : function(params : any) {
+        console.log(params);
+        return {backgroundColor : 'green'};
+      }
     },
     {
       field: "nodes",
@@ -132,9 +134,9 @@ const SampleGrid = () => {
   ];
   useEffect(() => {
     // 10초마다 Proficiency 업데이트
-    setTimeout(() => setRowData(new RowDataFactory().createRowData()), 1000000);
+    // setTimeout(() => setRowData(new RowDataFactory().createRowData()), 1000000);
 
-    console.log("rowData is changed?", rowData);
+    // console.log("rowData is changed?", rowData);
   }, [rowData, selectedRow]);
 
   const onGridReady = (params: any) => {
@@ -184,24 +186,43 @@ const SampleGrid = () => {
     setRowData(newRowData);
   };
 
-  const cellClicked = (params : any) => {
+  const cellClicked = (params: any) => {
     const buttonName = params.event.target.innerText;
 
-    if(buttonName === 'Edit') {
-        setSelectedRowData(params.data);
+    if (buttonName === 'Edit') {
+      let data: RowDataType = params.data;
+      data.index = params.rowIndex;
+      setSelectedRowData(data);
     }
-    else if(buttonName === 'Delete') {
+    else if (buttonName === 'Delete') {
       const deleteIndex = params.rowIndex;
       rowDeleteHandle(deleteIndex);
     }
     else {
 
     }
-    
-  } 
+
+  }
 
   const editGroups = (e: any) => {
-    console.log(e.target[0].value);
+
+    let newRowData: any = rowData.map((value: any, index: number) => {
+      return index === Number(e.target[9].value) ? {
+        ...value,
+        groups: e.target[0].value,
+        nodes: e.target[1].value,
+        aids: e.target[2].value,
+        units: e.target[3].value,
+        hardware: e.target[4].value,
+        software: e.target[5].value,
+        serialNumber: e.target[6].value,
+        proficency: Number(e.target[7].value),
+        result: e.target[8].value
+      } : value;
+    });
+
+    setRowData(newRowData);
+    setSelectedRow(!selectedRow);
   };
 
   return (
@@ -268,7 +289,8 @@ const SampleGrid = () => {
                 <p>
                   RESULT : <input defaultValue={selectedRowData.result} />
                 </p>
-                <button type="submit">edit</button>
+                <input type="hidden" defaultValue={selectedRowData.index}></input>
+                <button onSubmit={editGroups}>edit</button>
               </form>
             </div>
             <button onClick={handlecloseModal}>Close</button>
