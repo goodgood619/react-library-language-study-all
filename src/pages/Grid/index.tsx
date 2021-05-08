@@ -1,6 +1,5 @@
-import { AgGridReact } from "@ag-grid-community/react";
 import SampleProgressBar from "../../components/ProgressBar/index";
-import { useEffect, useRef, useState } from "react";
+import { useEffect,useState } from "react";
 import RowDataFactory from "../../utils/RowDataFactory";
 import { AllCommunityModules } from "@ag-grid-community/all-modules";
 import SampleEditDeleteButton from "../../components/EditDeleteButton/index";
@@ -12,7 +11,9 @@ import Modal from "react-modal";
 
 import SampleButton from "../../button/index";
 
-import { EditableText } from "@blueprintjs/core";
+import AGGridSample from '../../components/AGGrid/index';
+
+import ReactChartjsSample from '../../components/Chart/index';
 
 interface RowDataType {
   index?: number | undefined;
@@ -29,6 +30,7 @@ interface RowDataType {
 }
 const SampleGrid = () => {
   const [rowData, setRowData] = useState<any>(new RowDataFactory().createRowData());
+  const [ChartData,setChartData] = useState<any>(new RowDataFactory().createChartData());
   const [gridApi, setGridApi] = useState<any>();
   const [columnApi, setColumnApi] = useState<any>();
   const [selectedRow, setSelectedRow] = useState<boolean>(false);
@@ -167,13 +169,6 @@ const SampleGrid = () => {
     return false;
   };
 
-  const exportCSV = () => {
-    const params = {
-      fileName: "testexport",
-    };
-    gridApi.exportDataAsCsv(params);
-  };
-
   const cellValueChanged = (e: any) => {
     console.log("edited data : ", e.data);
     console.log("edited Index", e.rowIndex);
@@ -233,11 +228,9 @@ const SampleGrid = () => {
         height: 500,
       }}
     >
-      <button onClick={exportCSV}>test export csv</button>
-
-      <AgGridReact
-        columnDefs={columnDefs}
-        rowData={rowData}
+      <AGGridSample
+        columnDef = {columnDefs}
+        rowData = {rowData}
         onGridReady={onGridReady}
         modules={AllCommunityModules}
         enableBrowserTooltips={true}
@@ -245,10 +238,15 @@ const SampleGrid = () => {
         onCellClicked={cellClicked}
         isExternalFilterPresent={IsExternalFilterPresent}
         doesExternalFilterPass={doesExternalFilterPass}
-        multiSortKey={"ctrl"}
+        multiSortkey={"ctrl"}
         onSelectionChanged={selectionChanged}
         onCellValueChanged={cellValueChanged}
-      ></AgGridReact>
+        gridApi={gridApi}
+        columnApi={columnApi}
+      />
+      <ReactChartjsSample
+        data={ChartData}
+      />
       <Modal isOpen={selectedRow} onRequestClose={handlecloseModal}>
         <div>
           <div

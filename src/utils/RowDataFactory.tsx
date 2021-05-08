@@ -22,4 +22,12 @@ export default class RowDataFactory {
 
         return rowData;
     }
+
+    createChartData() {
+        const rowData = [];
+        for(let i = 0 ;i<8;i++) {
+            rowData.push(Math.round(Math.random()*100));
+        }
+        return rowData;
+    }
 }
