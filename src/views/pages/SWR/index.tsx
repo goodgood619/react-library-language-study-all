@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import useSWR from 'swr';
-import fetcher from '../../agent/fetch';
-import { API_URL } from '../../agent/sampleURL';
+import fetcher from '../../../agent/fetch';
+import { API_URL } from '../../../agent/sampleURL';
 
 import Modal from 'react-modal';
 
@@ -32,24 +32,31 @@ export function SWRSample() {
         setIndex(Number(e.target.value));
     };
 
+    const handleDialogClose = () => {
+        setUpdateResult(!updateResult);
+    };
+
     // render data and use Component here
     return (
         <>
             <h1>Hello SWR!</h1>
             <div>
                 {data.tags.map((item: any,index : number) => (
-                    <>
+                    <div>
                         <input type="text" defaultValue={item} onChange={handleValue}/>
                         <input type="hidden" defaultValue={index} onChange={handleIndex}/>
                         <button onClick={handleEdit}>
                             edit button
                         </button>
-                    </>
+                    </div>
                 ))}
                 {updateResult === true ? 
                 <Modal
-                isOpen={true}>
-                    성공입니다.
+                isOpen={updateResult}
+                onRequestClose={handleDialogClose}>
+                    업데이트 성공입니다.
+
+                    <button onClick={handleDialogClose}>close</button>
                 </Modal> : <></>}
             </div>
         </>

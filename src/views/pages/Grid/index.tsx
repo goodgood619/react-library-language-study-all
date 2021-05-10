@@ -1,8 +1,8 @@
-import SampleProgressBar from "../../components/ProgressBar/index";
+import SampleProgressBar from "../../../components/ProgressBar/index";
 import { useEffect,useState } from "react";
-import RowDataFactory from "../../utils/RowDataFactory";
+import RowDataFactory from "../../../utils/RowDataFactory";
 import { AllCommunityModules } from "@ag-grid-community/all-modules";
-import SampleEditDeleteButton from "../../components/EditDeleteButton/index";
+import SampleEditDeleteButton from "../../../components/EditDeleteButton/index";
 
 import "@ag-grid-community/core/dist/styles/ag-grid.css";
 import "@ag-grid-community/core/dist/styles/ag-theme-alpine.css";
@@ -11,9 +11,9 @@ import Modal from "react-modal";
 
 import SampleButton from "../../button/index";
 
-import AGGridSample from '../../components/AGGrid/index';
+import AGGridSample from '../../../components/AGGrid/index';
 
-import ReactChartjsSample from '../../components/Chart/index';
+import ReactChartjsSample from '../../../components/Chart/index';
 
 interface RowDataType {
   index?: number | undefined;

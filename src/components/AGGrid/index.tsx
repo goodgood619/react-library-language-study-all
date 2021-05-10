@@ -30,7 +30,7 @@ const AGGridSample: React.FC<gridApi> = props => {
     };
 
     return (
-        <>
+        <div className="sm w-full h-3/5">
         <button onClick={exportCSV}>test export csv</button>
 
         <AgGridReact
@@ -47,7 +47,7 @@ const AGGridSample: React.FC<gridApi> = props => {
           onSelectionChanged={props.onSelectionChanged}
           onCellValueChanged={props.onCellValueChanged}
         />
-        </>
+        </div>
     );
 };
 

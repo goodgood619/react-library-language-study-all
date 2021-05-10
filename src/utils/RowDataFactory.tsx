@@ -25,8 +25,16 @@ export default class RowDataFactory {
 
     createChartData() {
         const rowData = [];
-        for(let i = 0 ;i<8;i++) {
+        for(let i = 0 ; i < 8; i++) {
             rowData.push(Math.round(Math.random()*100));
+        }
+        return rowData;
+    }
+
+    createSoundData() {
+        const rowData = [];
+        for(let i = 0; i < 4; i++) {
+            rowData.push(false);
         }
         return rowData;
     }

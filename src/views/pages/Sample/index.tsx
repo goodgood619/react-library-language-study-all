@@ -1,7 +1,7 @@
-import SelectBox from '../../components/Select';
-import CytoScapeExample from '../../components/practice';
+import SelectBox from '../../../components/Select';
+import CytoScapeExample from '../../../components/practice';
 import {observer} from 'mobx-react-lite';
-import SampleSelectStore from '../../store/Select';
+import SampleSelectStore from '../../../store/Select';
 import { useEffect, useState } from 'react';
 
 // sample elements
