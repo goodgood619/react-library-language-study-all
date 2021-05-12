@@ -24,11 +24,13 @@ export default class RowDataFactory {
     }
 
     createChartData() {
-        const rowData = [];
-        for(let i = 0 ; i < 8; i++) {
-            rowData.push(Math.round(Math.random()*100));
+        const ret = [];
+        let y = 0;
+        for (let i = 0; i < 10; i += 1) {
+            y += Math.round(Math.random() * 10 - 5);
+            ret.push({ x: String(i*5), y });
         }
-        return rowData;
+        return ret;
     }
 
     createSoundData() {

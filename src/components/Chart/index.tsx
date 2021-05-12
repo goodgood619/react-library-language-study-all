@@ -1,73 +1,58 @@
-import {Line,Bar,Doughnut} from 'react-chartjs-2';
+import Paper from "@material-ui/core/Paper";
+import {
+  Chart,
+  ArgumentAxis,
+  ValueAxis,
+  LineSeries,
+  ZoomAndPan,
+  Legend,
+  Title,
+  Tooltip,
+  BarSeries
+} from "@devexpress/dx-react-chart-material-ui";
+import { EventTracker, HoverState, Stack } from "@devexpress/dx-react-chart";
 
 export interface ChartArray {
-    data?: Array<any>;
+  data?: Array<any>;
 }
-const ReactChartjsSample : React.FC<ChartArray> = props => {
 
-    const data = {
-        labels: ['#1', '#2', '#3', '#4', '#5', '#6', '#7' , '#8'],
-        datasets: [
-          {
-            label : 'This is DataSet',
-            borderColor: 'rgba(0,0,0,1)',
-            borderWidth: 2,
-            backgroundColor: [
-                '#B21F00',
-                '#C9DE00',
-                '#2FDE00',
-                '#00A6B4',
-                '#6800B4',
-                '#223333',
-              ],
-              hoverBackgroundColor: [
-              '#501800',
-              '#4B5000',
-              '#175000',
-              '#003350',
-              '#35014F'
-              ],
-            data: [1,0,10,0,2,0,3,0]
-          },
-          {
-            label : 'This is Random DataSet2',
-            borderColor: 'rgba(132,24,231,1)',
-            borderWidth: 2,
-            backgroundColor: [
-                '#00A6B4',
-                '#B21F00',
-                '#C9DE00',
-                '#6800B4',
-                '#223333',
-                '#2FDE00',
-              ],
-              hoverBackgroundColor: [
-                '#003350',
-                '#501800',
-              '#4B5000',
-              '#35014F',
-              '#175000',
-              ],
-            data: props.data
-          }
-        ]
-    };
-    
-    const options = {
-        responsive : true,
-        maintainAspectRatio: false,
-    };
+// Bar의 경우, x축이 number와 String일때 width의 길이가 다르다.
+const ReactChartjsSample: React.FC<ChartArray> = props => {
 
-    return (
-        <>
-            <Bar 
-            data={data} 
-            width={100}
-            height={50}
-            type="bar"
-            options={options}/>
-        </>
-    );
+  const handleChart = (e: any) => {
+    console.log('devChart click item', e);
+  };
+
+  const handleExport = (e: any) => {
+    console.log(e);
+  };
+
+  return (
+    <>
+      <Paper>
+        <Chart
+          data={props.data}>
+          <ArgumentAxis />
+          <ValueAxis />
+          <Title
+            text="test chart" />
+          <Legend
+            position="right"
+          />
+          <BarSeries name="Bar name" valueField="y" argumentField="x" />
+          <LineSeries name="Line name" valueField="y" argumentField="x" />
+          <Stack/>
+          <ZoomAndPan />
+          <EventTracker onClick={handleChart} />
+          <Tooltip />
+          <HoverState />
+        </Chart>
+      </Paper>
+      <button onClick={handleExport}>
+        test export button
+      </button>
+    </>
+  );
 };
 
 export default ReactChartjsSample;

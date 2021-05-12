@@ -10,9 +10,9 @@ import SoundButton from './views/button';
 function App() {
   return (
     <>
-      {/* <SampleGrid/> */}
+      <SampleGrid/>
       {/* <SWRSample/> */}
-      <SoundButton />
+      {/* <SoundButton /> */}
     </>
   );
 }

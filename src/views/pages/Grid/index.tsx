@@ -228,7 +228,7 @@ const SampleGrid = () => {
         height: 500,
       }}
     >
-      <AGGridSample
+      {/* <AGGridSample
         columnDef = {columnDefs}
         rowData = {rowData}
         onGridReady={onGridReady}
@@ -243,7 +243,7 @@ const SampleGrid = () => {
         onCellValueChanged={cellValueChanged}
         gridApi={gridApi}
         columnApi={columnApi}
-      />
+      /> */}
       <ReactChartjsSample
         data={ChartData}
       />
