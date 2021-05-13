@@ -2,28 +2,32 @@ import {useState} from 'react';
 import useSWR from 'swr';
 import fetcher from '../../../agent/fetch';
 import { API_URL } from '../../../agent/sampleURL';
-
+import {SWRArticle} from '../../../agent/index';
 import Modal from 'react-modal';
 
+
 export function SWRSample() {
-    const { data, error,isValidating,mutate } = useSWR(`${API_URL}/tags`, fetcher);
+    const {data, mutate,error} : any = SWRArticle();
     const [item,setItem] = useState<any>();
     const [index,setIndex] = useState<number>();
     const [updateResult,setUpdateResult] = useState<boolean>(false);
-    if (error) return <div>failed to load</div>
-    if (!data) return <div>loading...</div>
-
+    if(!data) return <div>loading...</div>
+    const newArray = handling(data); 
     const handleEdit = (e : any) => {
         const Editvalue = item;
         const Editindex = index;
-        const newData : Array<any> = data.tags.map((value : any, index : number)=> {
-            return index !== Editindex ? value : Editvalue
+        let newData = data;
+        newData = newData.comments.map((value : any, index : number)=> {
+            return index !== Editindex ? value : {...value, 
+            author : {
+                username : Editvalue
+            }}
         })
-        mutate({...data, tags : newData},false);
+        // mutate({comments : undefined},false);
+        mutate(undefined,false); //mutate시 값이 바뀌면, 자동으로 REST API CALL한다.,
 
        setUpdateResult(!updateResult);
     };
-
     const handleValue = (e : any) => {
         setItem(e.target.value);
     };
@@ -41,9 +45,9 @@ export function SWRSample() {
         <>
             <h1>Hello SWR!</h1>
             <div>
-                {data.tags.map((item: any,index : number) => (
+                {newArray.map((item: any,index : number) => (
                     <div>
-                        <input type="text" defaultValue={item} onChange={handleValue}/>
+                        <input type="text" defaultValue={item.author.username} onChange={handleValue}/>
                         <input type="hidden" defaultValue={index} onChange={handleIndex}/>
                         <button onClick={handleEdit}>
                             edit button
@@ -61,4 +65,10 @@ export function SWRSample() {
             </div>
         </>
     );
+}
+
+function handling(data : any) {
+    return data.comments.filter((value : any, index : number)=> {
+        return (value && value.id >= 5000);
+    })
 }

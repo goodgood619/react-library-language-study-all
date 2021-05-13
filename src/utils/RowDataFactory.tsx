@@ -26,8 +26,8 @@ export default class RowDataFactory {
     createChartData() {
         const ret = [];
         let y = 0;
-        for (let i = 0; i < 10; i += 1) {
-            y += Math.round(Math.random() * 10 - 5);
+        for (let i = 0; i < 100; i += 1) {
+            y += Math.round(Math.random() * 100 - 5);
             ret.push({ x: String(i*5), y });
         }
         return ret;
