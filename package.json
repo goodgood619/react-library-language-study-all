@@ -28,6 +28,8 @@
     "autoprefixer": "^9",
     "axios": "^0.21.1",
     "chart.js": "^3.2.1",
+    "chartjs-plugin-streaming": "https://github.com/novonetworks/chartjs-plugin-streaming",
+    "chartjs-plugin-zoom": "https://github.com/novonetworks/chartjs-plugin-zoom",
     "cytoscape": "^3.18.1",
     "cytoscape-cose-bilkent": "^4.1.0",
     "cytoscape-panzoom": "^2.5.3",

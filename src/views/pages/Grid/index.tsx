@@ -245,8 +245,7 @@ const SampleGrid = () => {
         columnApi={columnApi}
       /> */}
       <ReactChartjsSample
-        data={ChartData}
-      />
+        data={ChartData}/>
       <Modal isOpen={selectedRow} onRequestClose={handlecloseModal}>
         <div>
           <div

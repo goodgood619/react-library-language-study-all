@@ -1,3 +1,4 @@
+import axios from 'axios';
 import useSWR from 'swr';
 import fetcher from './fetch';
 import { API_URL } from './sampleURL';
@@ -10,17 +11,17 @@ function Profile() {
     // // render data
     // return <div>hello {data.tags}!</div>
     return {
-        data : data.tags
+        data : data
     }
 }
 
-export const SWRArticle = () => {
-    const {data,mutate,error} = useSWR(`${API_URL}/articles/${1}/comments`,fetcher);
-    if (error) return <div>failed to load</div>
-    if (!data) return <div>loading...</div>
-    return {
-        data,
-        mutate,
-        error
-    };
+// SWRArticle -> useSWRArticle
+export const useSWRArticle = () => {
+    return useSWR(`${API_URL}`,fetcher,{initialData : undefined,revalidateOnMount : true});
 }
+
+export const SWRArticleEdit = () => {
+    axios.post(`${API_URL}`).then((res : any)=> {
+        console.log(res);
+    });
+};

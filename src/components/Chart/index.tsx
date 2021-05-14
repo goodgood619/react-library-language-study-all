@@ -1,47 +1,26 @@
-import Paper from "@material-ui/core/Paper";
-import {
-  Chart,
-  ArgumentAxis,
-  ValueAxis,
-  LineSeries,
-  ZoomAndPan,
-  Legend,
-  Title,
-  Tooltip,
-  BarSeries
-} from "@devexpress/dx-react-chart-material-ui";
-import { EventTracker, HoverState, Stack } from "@devexpress/dx-react-chart";
+import { Chart, ChartData, ChartOptions, ScaleType } from "chart.js";
+import { Line } from "react-chartjs-2";
+import zoomPlugin from "chartjs-plugin-zoom";
+//@ts-ignore
+import streamingPlugin from "chartjs-plugin-streaming";
 import React, { useRef } from "react";
 //@ts-ignore
 import {saveAs} from 'file-saver';
 import html2canvas from 'html2canvas';
 export interface ChartArray {
-  data?: Array<any>;
+  data?: any;
 }
 
-interface LineProps {
-  /** The line start’s x coordinate */
-  x1: number;
-  /** The line end’s x coordinate */
-  x2: number;
-  /** The line start’s y coordinate */
-  y1: number;
-  /** The line end’s y coordinate */
-  y2: number;
-}
+Chart.register([zoomPlugin,streamingPlugin]);
 
-// Bar의 경우, x축이 number와 String일때 width의 길이가 다르다.
 const ReactChartjsSample: React.FC<ChartArray> = props => {
 
-  const ref = useRef();
-  const handleChart = (e: any) => {
-    console.log('devChart click item', e);
-  };
+  const ref = useRef(Chart);
 
   const handleExport = (e: any) => {
     console.log(ref);
     if(ref !== null) {
-      let canvas = document.getElementById("chart");
+      let canvas = document.getElementById('line');
       html2canvas(canvas!).then(canvas => {
         canvas.toBlob(function(blob){
           saveAs(blob,'test.png');
@@ -50,42 +29,48 @@ const ReactChartjsSample: React.FC<ChartArray> = props => {
     }
   };
 
+  const options : ChartOptions = {
+    responsive : false, // canvas의 width, height 절대값이 적용가능하게 함,
+    scales : {
+      xAxes : {
+        beginAtZero : true, 
+        ticks : {
+          autoSkip : false // x축의 label들을 전부 보여줌
+        }
+      }
+    },
+    plugins: {
+      legend : {
+        position : 'right',
+      },
+      zoom: {
+        pan: {
+          enabled: true,
+          mode: "x",
+        },
+        zoom: {
+          enabled: true,
+          mode: "x",
+        },
+      },
+    },
+  };
 
-
-  const lineFC: React.FC<LineProps> = (props) => (
-    <>
-      {props}
-    </>
-  );
   return (
-    <>
-      <Paper
-      id="chart"
-      ref={ref}>
-        <Chart
-          data={props.data}>
-          <ArgumentAxis 
-          tickSize={5}
-          />
-          <ValueAxis />
-          <Title
-            text="test chart" />
-          <Legend
-            position="right"
-          />
-          <BarSeries name="Bar name" valueField="y" argumentField="x" />
-          <LineSeries name="Line name" valueField="y" argumentField="x" />
-          <Stack/>
-          <ZoomAndPan />
-          <EventTracker onClick={handleChart} />
-          <Tooltip />
-          <HoverState />
-        </Chart>
-      </Paper>
+    <div>
+      <Line
+      id='line'
+        ref={ref}
+        data = {props.data}
+        type={"line"}
+        options={options}
+        width={500}
+        height={500}
+      ></Line>
       <button onClick={handleExport}>
         test export png
       </button>
-    </>
+    </div>
   );
 };
 

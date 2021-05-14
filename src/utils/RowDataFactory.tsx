@@ -24,13 +24,19 @@ export default class RowDataFactory {
     }
 
     createChartData() {
-        const ret = [];
-        let y = 0;
-        for (let i = 0; i < 100; i += 1) {
-            y += Math.round(Math.random() * 100 - 5);
-            ret.push({ x: String(i*5), y });
+        return {
+            labels : ['#1','#2','#3','$5','!23','@#24','2021년 5월 11일','2021년 5월 12일','2021년 5월 13일','2021년 5월 14일','2021년 5월 15일','2021년 5월 16일','2021년 5월 17일','2021년 5월 18일',
+            ,'2021년 5월 19일','2021년 5월 20일','2021년 5월 21일','2021년 5월 22일','2021년 5월 23일','2021년 5월 24일','2021년 5월 25일','2021년 5월 26일','2021년 5월 27일','2021년 5월 28일'],
+            datasets: [
+                {
+                  label: "Random Dataset",
+                  borderColor: "rgb(54, 162, 235)",
+                  backgroundColor: "rgba(54, 162, 235, 0.5)",
+                  cubicInterpolationMode: "monotone",
+                  data: [1,2,3,4,2,52,1,2,3,4,2,5,3,2,1,2,3,2,12,14,2,43,1,12],
+                },
+              ],
         }
-        return ret;
     }
 
     createSoundData() {
